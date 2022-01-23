@@ -6,6 +6,16 @@
   height: 40vmin;
   pointer-events: none;
 }
+.background{
+  background-image: url('./background.jpg');
+  background-size: cover;
+  height: 40vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: whitesmoke;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
