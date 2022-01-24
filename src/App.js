@@ -1,6 +1,11 @@
+/*eslint-disable */
 import './App.css';
 import { Nav,Container,Navbar,NavDropdown,Button } from 'react-bootstrap';
+import { useState } from 'react';
+import  Data from "./data"
+
 function App() {
+  let [shoes, shoes변경] =useState(Data)
   return (
     <div className="App">
       <Navbar bg="light" expand="lg">
@@ -33,21 +38,19 @@ function App() {
 
     <div className='container'>
       <div className='row'>
-        <div className='col-md-4'>
-          <img src='https://codingapple1.github.io/shop/shoes1.jpg' width="100%" alt="shoes"/>
-          <h4>상품명</h4>
-          <p>상품설명 & 가격</p>
-        </div>
-        <div className='col-md-4'><img src='https://codingapple1.github.io/shop/shoes2.jpg' width="100%" alt="shoes"/>
-          <h4>상품명</h4>
-          <p>상품설명 & 가격</p></div>
-        <div className='col-md-4'><img src='https://codingapple1.github.io/shop/shoes3.jpg' width="100%" alt="shoes"/>
-          <h4>상품명</h4>
-          <p>상품설명 & 가격</p></div>
+        {shoes.map((data,i)=>{return (<ShoesData shoes={data} i={i}/>)})}
       </div>
     </div>
     </div>
   );
 }
 
+function ShoesData({shoes,i}){
+  return(
+          <div className='col-md-4'>
+          <img src={`https://codingapple1.github.io/shop/shoes${i+1}.jpg`}width="100%" alt="shoes"/>
+          <h4>{shoes.title}</h4>
+          <p>{shoes.content}&{shoes.price}</p>
+        </div>)
+}
 export default App;
