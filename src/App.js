@@ -1,8 +1,11 @@
 /*eslint-disable */
 import './App.css';
 import { Nav,Container,Navbar,NavDropdown,Button } from 'react-bootstrap';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import  Data from "./data"
+import {Link, Route, Switch} from "react-router-dom"
+import Detail from './Detail';
+
 
 function App() {
   let [shoes, shoes변경] =useState(Data)
@@ -28,19 +31,27 @@ function App() {
       </Container>
     </Navbar>
       
-    <div className="background">
-        <h1 className="main_sale "> 20% Season OFF</h1>
-        <p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-        <hr className="my-4"/>
-        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-        <Button variant="primary ">Primary</Button>
-      </div>
 
-    <div className='container'>
-      <div className='row'>
-        {shoes.map((data,i)=>{return (<ShoesData shoes={data} i={i}/>)})}
-      </div>
-    </div>
+
+      <Route exact path="/">
+        <div className="background">
+          <h1 className="main_sale "> 20% Season OFF</h1>
+          <p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+          <hr className="my-4"/>
+          <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+          <Button variant="primary ">Primary</Button>
+        </div>
+        <div className='container'>
+          <div className='row'>
+          {shoes.map((data,i)=>{return (<ShoesData shoes={data} i={i}/>)})}
+          </div>    
+        </div>
+      </Route>
+      <Route path="/detail">
+        <Detail/>
+      </Route>
+
+    
     </div>
   );
 }
