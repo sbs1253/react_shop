@@ -17,8 +17,8 @@ function App() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
+            <Nav.Link><Link to="/">Home</Link></Nav.Link>
+            <Nav.Link><Link to="/detail">Detail</Link></Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -32,7 +32,7 @@ function App() {
     </Navbar>
       
 
-
+    <Switch>
       <Route exact path="/">
         <div className="background">
           <h1 className="main_sale "> 20% Season OFF</h1>
@@ -47,11 +47,16 @@ function App() {
           </div>    
         </div>
       </Route>
-      <Route path="/detail">
-        <Detail/>
+      <Route path="/detail/:id" >
+        <Detail shoes ={shoes}/>
       </Route>
+      <Route path={"/:id"}>
+        <div>Swich는 중복허용 안한다는 뜻</div>
+      </Route>
+    </Switch>
 
-    
+
+
     </div>
   );
 }
