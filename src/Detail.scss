@@ -1,0 +1,29 @@
+@import "./_reset.scss";
+$메인칼라:#ff0000;
+// 기본 css 파일 불러오기 ,css 변수로 선언($ , @import)
+.red{
+  color: $메인칼라;
+}
+.my-alert{
+  background:#eeeeee;
+  padding: 15px;
+  border-radius: 5px;
+  max-width: 500px;
+  width: 100%;
+  margin: auto;
+}
+.my-alert2{
+  @extend .my-alert;
+  // 같은형식의 css 가져오기(@extend)
+  background: #ffe591;
+}
+
+// 함수 만들어 쓰기 (@mixin, @include)
+@mixin 함수 {
+  margin-bottom: 0;
+  color: $메인칼라;
+}
+
+.my-alert p{
+  @include 함수
+}
