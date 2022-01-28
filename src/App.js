@@ -5,11 +5,13 @@ import React, { useEffect, useState } from 'react';
 import  Data from "./data"
 import {Link, Route, Switch} from "react-router-dom"
 import Detail from './Detail';
+import axios from 'axios';
 
 
 function App() {
   let [shoes, shoes변경] =useState(Data)
-
+  let [loading, setLoading] = useState(false)
+  let[재고, 재고변경]=useState([10,11,12])
   return (
     <div className="App">
       <Navbar bg="light" expand="lg">
@@ -46,10 +48,20 @@ function App() {
           <div className='row'>
           {shoes.map((data,i)=>{return (<ShoesData key={i} shoes={data} i={i}/>)})}
           </div>    
+          {loading? <div>로딩중입니다.</div>:null}
+          <button className='btn btn-primary' onClick={()=>{
+            setLoading(true)
+            axios.get(`https://codingapple1.github.io/shop/data2.json`)
+            .then((respone)=>{
+              shoes변경([...shoes, ...respone.data])
+              setLoading(false)
+            })
+            .catch(()=>{console.log("실패")})
+          }}>더보기</button>
         </div>
       </Route>
       <Route path="/detail/:id" >
-        <Detail shoes ={shoes}/>
+        <Detail shoes ={shoes} 재고={재고}/>
       </Route>
       <Route path={"/:id"}>
         <div>Swich는 중복허용 안한다는 뜻</div>
@@ -71,3 +83,7 @@ function ShoesData({shoes,i}){
         </div>)
 }
 export default App;
+
+/*
+    post요청: ex) axios.post('서버 URL',{id:'apple',pw:1234})
+ */
