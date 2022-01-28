@@ -53,4 +53,4 @@ function Info({재고}){
   )
 }
 
-// history.push("이동할 링크")
+// history.push("이동할 링크") : 헤더 작성도 가능
