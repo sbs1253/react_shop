@@ -1,12 +1,13 @@
 /*eslint-disable */
 import './App.css';
 import { Nav,Container,Navbar,NavDropdown,Button } from 'react-bootstrap';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import  Data from "./data"
 import {Link, Route, Switch} from "react-router-dom"
 import Detail from './Detail';
 import axios from 'axios';
 
+let 재고context = React.createContext();
 
 function App() {
   let [shoes, shoes변경] =useState(Data)
@@ -44,10 +45,15 @@ function App() {
           <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
           <Button variant="primary ">Primary</Button>
         </div>
+
+
         <div className='container'>
+          <재고context.Provider value={재고}>
           <div className='row'>
           {shoes.map((data,i)=>{return (<ShoesData key={i} shoes={data} i={i}/>)})}
           </div>    
+          </재고context.Provider>
+
           {loading? <div>로딩중입니다.</div>:null}
           <button className='btn btn-primary' onClick={()=>{
             setLoading(true)
@@ -75,11 +81,14 @@ function App() {
 }
 
 function ShoesData({shoes,i}){
+  let 재고 =useContext(재고context);
+
   return(
           <div className='col-md-4'>
           <img src={`https://codingapple1.github.io/shop/shoes${i+1}.jpg`}width="100%" alt="shoes"/>
           <h4>{shoes.title}</h4>
           <p>{shoes.content}&{shoes.price}</p>
+          <p>남은 개수: {재고[i]}</p>
         </div>)
 }
 export default App;
