@@ -95,4 +95,5 @@ export default App;
 
 /*
     post요청: ex) axios.post('서버 URL',{id:'apple',pw:1234})
+    context :변수context = React.createContext();
  */
