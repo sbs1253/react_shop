@@ -6,6 +6,7 @@ import  Data from "./data"
 import {Link, Route, Switch} from "react-router-dom"
 import Detail from './Detail';
 import axios from 'axios';
+import Cart from './Cart';
 
 let 재고context = React.createContext();
 
@@ -68,6 +69,10 @@ function App() {
       </Route>
       <Route path="/detail/:id" >
         <Detail shoes ={shoes} 재고={재고}/>
+      </Route>
+
+      <Route path={"/cart"}>
+        <Cart></Cart>
       </Route>
       <Route path={"/:id"}>
         <div>Swich는 중복허용 안한다는 뜻</div>

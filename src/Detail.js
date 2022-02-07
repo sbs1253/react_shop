@@ -1,10 +1,11 @@
 /*eslint-disable */
-
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import styled from "styled-components"
 import "./Detail.scss"
 import { Nav } from 'react-bootstrap';
+import {CSSTransition} from "react-transition-group"
+
 let Box =styled.div`
 padding:20px;
 ` ;
@@ -18,6 +19,8 @@ export default function Detail({shoes,재고}){
   let {id} = useParams();
   const [show,setShow] = useState(true)
   const [누른탭, 누른탭변경]  = useState(0)
+  const [스위치, 스위치변경]  = useState(false)
+
   useEffect(()=>{
     let 타이머 = setTimeout(()=>{setShow(false)},2000)
     return ()=>{clearTimeout(타이머)}
@@ -46,18 +49,25 @@ export default function Detail({shoes,재고}){
 
       <Nav className='mt-5' variant="tabs" defaultActiveKey="link-0">
         <Nav.Item>
-          <Nav.Link eventKey="link-0" onClick={()=>{누른탭변경(0)}}>Active</Nav.Link>
+          <Nav.Link eventKey="link-0" onClick={()=>{ 스위치변경(false);누른탭변경(0)}}>상품설명</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="link-1" onClick={()=>{누른탭변경(1)}}>Option 2</Nav.Link>
+          <Nav.Link eventKey="link-1" onClick={()=>{스위치변경(false);누른탭변경(1)}}>배송정보</Nav.Link>
         </Nav.Item>
       </Nav>
-      <TabContent 누른탭={누른탭} />
-      
+
+      <CSSTransition in={스위치} classNames="wow" timeout={500}>
+      <TabContent 누른탭={누른탭} 스위치변경={스위치변경} />
+      </CSSTransition>
         </div>  
   )
 }
-function TabContent({누른탭}){
+function TabContent({누른탭, 스위치변경}){
+
+  useEffect(()=>{
+    스위치변경(true);
+  })
+  
   if (누른탭===0){
     return <div>0번째 내용</div>
   }else if (누른탭===1){
