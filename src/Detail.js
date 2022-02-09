@@ -5,6 +5,7 @@ import styled from "styled-components"
 import "./Detail.scss"
 import { Nav } from 'react-bootstrap';
 import {CSSTransition} from "react-transition-group"
+import { connect, useSelector,useDispatch } from 'react-redux';
 
 let Box =styled.div`
 padding:20px;
@@ -13,8 +14,7 @@ let 제목 = styled.h4`
   font-size: 30px;
   color :${props=>props.색상};
 `
-
-export default function Detail({shoes,재고}){
+function Detail({shoes,재고}){
   let history = useHistory()
   let {id} = useParams();
   const [show,setShow] = useState(true)
@@ -25,8 +25,11 @@ export default function Detail({shoes,재고}){
     let 타이머 = setTimeout(()=>{setShow(false)},2000)
     return ()=>{clearTimeout(타이머)}
   },[])
-
   let 찾은상품 = shoes.find(x=>x.id==id);
+
+  let state = useSelector((state)=>state.reducer)
+  let dispatch = useDispatch();
+
   return(
         <div className="container">
           <Box><제목 색상="black">Detail</제목></Box>
@@ -42,11 +45,12 @@ export default function Detail({shoes,재고}){
               <p>{찾은상품.content}</p>
               <p>{찾은상품.price}</p>
               <Info 재고={재고[id]}/>
-              <button className="btn btn-danger">주문하기</button> 
+              <button className="btn btn-danger" onClick={()=>{dispatch({type : '항목추가', 데이터 : {id : 찾은상품.id, name : 찾은상품.title, quan : 1} }) 
+              history.push('/cart'); 
+              }}>주문하기</button> 
               <button className="btn btn-danger" onClick={()=>{history.goBack()}}>뒤로가기</button> 
             </div>
           </div>
-
       <Nav className='mt-5' variant="tabs" defaultActiveKey="link-0">
         <Nav.Item>
           <Nav.Link eventKey="link-0" onClick={()=>{ 스위치변경(false);누른탭변경(0)}}>상품설명</Nav.Link>
@@ -82,4 +86,6 @@ function Info({재고}){
   )
 }
 
+export default Detail
 // history.push("이동할 링크") : 헤더 작성도 가능
+// props 구조분해 하면 dispatch

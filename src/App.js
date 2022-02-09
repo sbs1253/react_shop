@@ -7,6 +7,7 @@ import {Link, Route, Switch} from "react-router-dom"
 import Detail from './Detail';
 import axios from 'axios';
 import Cart from './Cart';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 let 재고context = React.createContext();
 
@@ -51,7 +52,7 @@ function App() {
         <div className='container'>
           <재고context.Provider value={재고}>
           <div className='row'>
-          {shoes.map((data,i)=>{return (<ShoesData key={i} shoes={data} i={i}/>)})}
+          {shoes.map((data,i)=>{return (<Card key={i} shoes={data} i={i}/>)})}
           </div>    
           </재고context.Provider>
 
@@ -85,11 +86,11 @@ function App() {
   );
 }
 
-function ShoesData({shoes,i}){
+function Card({shoes,i}){
   let 재고 =useContext(재고context);
-
+  let history = useHistory();
   return(
-          <div className='col-md-4'>
+          <div className='col-md-4' onClick={()=>{history.push("/detail/"+ shoes.id)}}>
           <img src={`https://codingapple1.github.io/shop/shoes${i+1}.jpg`}width="100%" alt="shoes"/>
           <h4>{shoes.title}</h4>
           <p>{shoes.content}&{shoes.price}</p>
@@ -102,3 +103,22 @@ export default App;
     post요청: ex) axios.post('서버 URL',{id:'apple',pw:1234})
     context :변수context = React.createContext();
  */
+/* 
+오브젝트 자료형을 응용한 enum
+:
+var 탭UI = { 
+  info : <p>상품정보</p>,
+  shipping : <p>배송관련</p>,
+  refund : <p>환불약관</p>
+}
+
+function Component() {
+  var 현재상태 = 'info';
+  return (
+    <div>
+      {
+        탭UI[현재상태]
+      }
+    </div>
+  )
+}  */
