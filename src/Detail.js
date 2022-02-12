@@ -30,6 +30,21 @@ function Detail({shoes,재고}){
   let state = useSelector((state)=>state.reducer)
   let dispatch = useDispatch();
 
+  useEffect(()=>{
+      var arr = localStorage.getItem('watched')
+      if(arr===null){
+        arr=[]
+      }else{
+        arr = JSON.parse(arr)
+      }
+
+      arr.push(id)
+      arr =new Set(arr)
+      arr =[...arr]
+
+      localStorage.setItem('watched', JSON.stringify(arr))
+  },[]);
+
   return(
         <div className="container">
           <Box><제목 색상="black">Detail</제목></Box>
