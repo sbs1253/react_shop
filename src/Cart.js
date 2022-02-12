@@ -1,8 +1,8 @@
-import React from 'react';
+import React,{useEffect, memo} from 'react';
 import { Table } from 'react-bootstrap';
-import { connect, useDispatch, useSelector } from 'react-redux';
-function Cart(props){
+import {  useDispatch, useSelector } from 'react-redux';
 
+function Cart(props){
   let state = useSelector((state)=>state.reducer)
   let dispatch = useDispatch();
   return (
@@ -15,7 +15,7 @@ function Cart(props){
           <th>변경</th>
         </tr>
         {state.map((a,i)=>{
-          return(
+        return(
         <tr key={i}>
           <td>{a.id}</td>
           <td>{a.name}</td>
@@ -32,6 +32,7 @@ function Cart(props){
     </div>:
     null
     }
+    <Parent 이름="존박" 나이="20"/>
     </div>
   )
 }
@@ -44,6 +45,22 @@ function Cart(props){
 export default connect(함수명)(Cart) */
 export default Cart
 
-
+function Parent(props){
+  return (
+    <div>
+      <Child1/>
+      <Child2/> 
+    </div>
+  )
+}
+function Child1(){
+  useEffect( ()=>{ console.log('렌더링됨1') } );
+  return <div>1111</div>
+}
+let Child2= memo(function(){
+  useEffect( ()=>{ console.log('렌더링됨2') } );
+  return <div>2222</div>
+})
 // Redux 는 골라쓰는 것이므로 다른곳에서 안쓰는것은 useState 가 더 좋은 관습
 // dispatch => 액션객체
+// memo 는 컴포넌트가 클때 사용 추천(불필요한 재렌더링 막는기능)

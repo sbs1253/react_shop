@@ -1,10 +1,11 @@
 /*eslint-disable */
 import './App.css';
 import { Nav,Container,Navbar,NavDropdown,Button } from 'react-bootstrap';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState,lazy,Suspense } from 'react';
 import  Data from "./data"
 import {Link, Route, Switch} from "react-router-dom"
-import Detail from './Detail';
+// import Detail from './Detail';
+let Detail = lazy(()=>{return import('./Detail') })
 import axios from 'axios';
 import Cart from './Cart';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
@@ -69,7 +70,9 @@ function App() {
         </div>
       </Route>
       <Route path="/detail/:id" >
+        <Suspense fallback={<div>로딩중이에요</div>}>
         <Detail shoes ={shoes} 재고={재고}/>
+        </Suspense>
       </Route>
 
       <Route path={"/cart"}>
@@ -99,13 +102,14 @@ function Card({shoes,i}){
 }
 export default App;
 
+
 /*
     post요청: ex) axios.post('서버 URL',{id:'apple',pw:1234})
     context :변수context = React.createContext();
  */
 /* 
 오브젝트 자료형을 응용한 enum
-:
+:::
 var 탭UI = { 
   info : <p>상품정보</p>,
   shipping : <p>배송관련</p>,
